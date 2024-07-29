@@ -6,3 +6,40 @@ SET 'table.exec.mini-batch.allow-latency' = '500 ms';
 
 SET 'table.exec.mini-batch.size' = '1000';
 
+CREATE TABLE push_users (
+                            id INT,
+                            account_code STRING,
+                            password STRING,
+                            salt STRING,
+                            email STRING,
+                            first_name STRING,
+                            last_name STRING,
+                            uuid BINARY(16),
+                            date_created TIMESTAMP(0),
+                            date_modified TIMESTAMP(0),
+                            PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+      'connector' = 'mysql-cdc',
+      'hostname' = '0.0.0.0',
+      'port' = '3306',
+      'username' = 'root',
+      'password' = 'root',
+      'database-name' = 'push',
+      'table-name' = 'users',
+      'server-time-zone' = 'UTC'
+      );
+CREATE TABLE user_woo_users (
+                                id INT,
+                                user_id INT,
+                                woo_user_id INT,
+                                PRIMARY KEY (id) NOT ENFORCED
+) WITH (
+      'connector' = 'mysql-cdc',
+      'hostname' = '0.0.0.0',
+      'port' = '3306',
+      'username' = 'root',
+      'password' = 'root',
+      'database-name' = 'shop',
+      'table-name' = 'user_woo_users',
+      'server-time-zone' = 'UTC'
+      );
