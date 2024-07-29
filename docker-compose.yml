@@ -15,9 +15,9 @@ services:
       - "8081:8081"
     command: jobmanager
     volumes:
-      - ./resources/jars/flink-sql-connector-mysql-cdc-2.4.1.jar:/opt/flink/lib/flink-sql-connector-mysql-cdc-2.4.1.jar
-      - ./resources/jars/flink-connector-jdbc-3.1.0-1.17.jar:/opt/flink/lib/flink-connector-jdbc-3.1.0-1.17.jar
-      - ./resources/jobs/job.sql:/opt/flink/job.sql
+      - ./ext/jars/flink-sql-connector-mysql-cdc-2.4.1.jar:/opt/flink/lib/flink-sql-connector-mysql-cdc-2.4.1.jar
+      - ./ext/jars/flink-connector-jdbc-3.1.0-1.17.jar:/opt/flink/lib/flink-connector-jdbc-3.1.0-1.17.jar
+      - ./ext/jobs/job.sql:/opt/flink/job.sql
     networks:
       - flink-net
 
@@ -26,8 +26,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./resources/sql/mysql.cnf:/etc/mysql/mysql.conf.d/mysql.cnf
-      - ./resources/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./ext/sql/mysql.cnf:/etc/mysql/mysql.conf.d/mysql.cnf
+      - ./ext/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
     networks:

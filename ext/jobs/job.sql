@@ -6,7 +6,7 @@ SET 'table.exec.mini-batch.allow-latency' = '500 ms';
 
 SET 'table.exec.mini-batch.size' = '1000';
 
-CREATE TABLE push_users (
+CREATE TABLE ebdb_users (
                             id INT,
                             account_code STRING,
                             password STRING,
@@ -24,11 +24,12 @@ CREATE TABLE push_users (
       'port' = '3306',
       'username' = 'root',
       'password' = 'root',
-      'database-name' = 'push',
+      'database-name' = 'ebdb',
       'table-name' = 'users',
       'server-time-zone' = 'UTC'
       );
-CREATE TABLE user_woo_users (
+
+CREATE TABLE ebdb_user_woo_users (
                                 id INT,
                                 user_id INT,
                                 woo_user_id INT,
@@ -39,7 +40,7 @@ CREATE TABLE user_woo_users (
       'port' = '3306',
       'username' = 'root',
       'password' = 'root',
-      'database-name' = 'shop',
+      'database-name' = 'ebdb',
       'table-name' = 'user_woo_users',
       'server-time-zone' = 'UTC'
       );
