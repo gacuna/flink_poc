@@ -10,6 +10,7 @@ import org.apache.flink.connector.kafka.sink.KafkaSink;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 
 public class SyncJob {
+
   public static void main(String[] args) throws Exception {
     MySqlSource<String> mySqlSource = MySqlSource.<String>builder()
         .hostname("localhost")
@@ -37,11 +38,12 @@ public class SyncJob {
     env.enableCheckpointing(3000);
     env
         .fromSource(mySqlSource, WatermarkStrategy.noWatermarks(), "MySQL Source")
+        .setParallelism(4)
         .sinkTo(kafkaSink)
         // set 4 parallel source tasks
-        .setParallelism(4)
         //.print()
         .setParallelism(1); // use parallelism 1 for sink to keep message ordering
-    env.execute("Print MySQL Snapshot + Binlog");
+    env.execute("PushDb/UsersDb sync PoC");
   }
+
 }
