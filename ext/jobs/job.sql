@@ -41,3 +41,26 @@ CREATE TABLE ebdb_user_woo_users (
       'table-name' = 'user_woo_users',
       'server-time-zone' = 'UTC'
       );
+
+CREATE TABLE shop_shop_users (
+                                     ID INT,
+                                     user_login STRING,
+                                     user_pass STRING,
+                                     user_nicename STRING,
+                                     user_email STRING,
+                                     user_url STRING,
+                                     user_registered TIMESTAMP(0),
+                                     user_activation_key STRING,
+                                     user_status INT,
+                                     display_name STRING,
+                                     PRIMARY KEY (ID) NOT ENFORCED
+) WITH (
+      'connector' = 'mysql-cdc',
+      'hostname' = 'mysql-push',
+      'port' = '3306',
+      'username' = 'cdcuser',
+      'password' = 'cdcpass',
+      'database-name' = 'shop',
+      'table-name' = 'shop_users',
+      'server-time-zone' = 'UTC'
+      );
