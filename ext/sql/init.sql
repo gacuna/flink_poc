@@ -1,4 +1,5 @@
 CREATE DATABASE IF NOT EXISTS ebdb;
+CREATE DATABASE IF NOT EXISTS shop;
 
 USE ebdb;
 
@@ -322,7 +323,6 @@ INSERT INTO users (account_code,password,salt,email,first_name,last_name,ship_ad
                                                                                                                                                                                                                                                                                                                 ('kim.jamieson@frontiernet.net','6b82bb389596378b03b11332ea9ed8b155b812ad1b36c1e47ec69f4c6b7ce288','17f4a075589f7f79','kimjam9@gmail.com','Kim ','Jamieson','31 Lombardy Circle','','Rochester','NY','14612','US','5856635413','5856635413','2014-01-01 00:00:00','',0,0,0x0F789B7D9B8C40DF9F880D3669A9E9A4,'2014-01-01 00:00:00','2021-08-20 21:08:07',0,'2020-02-26 04:56:35','2021-08-20 21:08:07',NULL),
                                                                                                                                                                                                                                                                                                                 ('malinis.sheryl@gmail.com','b90394286ec2466726d5698203fd5986f5bab4a74558217a63e9791152a337b9','19aa62a244451b37','malinis.sheryl@gmail.com','Sheryl ','Malinis','2100 Colonial Ave ','FL 2','Bronx','NY','10461','US','9174994078','9174994078','2014-01-01 00:00:00','',0,0,0x4605B37DBA024024AE87C273FE583C13,'2014-01-01 00:00:00','2020-04-27 10:51:43',0,'2020-02-26 04:56:35','2020-04-27 10:51:43',NULL);
 
-CREATE DATABASE IF NOT EXISTS shop;
 
 USE shop;
 
@@ -538,3 +538,9 @@ INSERT INTO shop_usermeta (user_id,meta_key,meta_value) VALUES
                                                             (2737,'shipping_address_2','Apt. 2R'),
                                                             (2737,'shipping_city','Brooklyn ');
 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+ALTER USER 'cdcuser'@'%' IDENTIFIED WITH mysql_native_password BY 'cdcpass';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO 'cdcuser'@'%' WITH GRANT OPTION;
+UPDATE mysql.user SET host='%' WHERE user='cdcuser';
+FLUSH PRIVILEGES;

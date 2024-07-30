@@ -46,6 +46,10 @@ services:
     platform: linux/x86_64
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: cdcuser
+      MYSQL_PASSWORD: cdcpass
+      MYSQL_MASTER_DATABASE: edbd
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - mysql_data_ebdb:/var/lib/mysql
       - mysql_data_ebdb:/var/log/mysql

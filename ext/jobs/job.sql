@@ -17,10 +17,10 @@ CREATE TABLE ebdb_users (
                             PRIMARY KEY (id) NOT ENFORCED
 ) WITH (
       'connector' = 'mysql-cdc',
-      'hostname' = '0.0.0.0',
+      'hostname' = 'mysql-push',
       'port' = '3306',
-      'username' = 'root',
-      'password' = 'root',
+      'username' = 'cdcuser',
+      'password' = 'cdcpass',
       'database-name' = 'ebdb',
       'table-name' = 'users',
       'server-time-zone' = 'UTC'
@@ -33,10 +33,10 @@ CREATE TABLE ebdb_user_woo_users (
                                 PRIMARY KEY (id) NOT ENFORCED
 ) WITH (
       'connector' = 'mysql-cdc',
-      'hostname' = '0.0.0.0',
+      'hostname' = 'mysql-push',
       'port' = '3306',
-      'username' = 'root',
-      'password' = 'root',
+      'username' = 'cdcuser',
+      'password' = 'cdcpass',
       'database-name' = 'ebdb',
       'table-name' = 'user_woo_users',
       'server-time-zone' = 'UTC'
