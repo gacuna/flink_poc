@@ -49,7 +49,7 @@ services:
     volumes:
       - mysql_data_ebdb:/var/lib/mysql
       - mysql_data_ebdb:/var/log/mysql
-      - ./ext/sql/mysql.cnf:/etc/mysql/conf.d/my.cnf
+      - ./ext/sql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
       - ./ext/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
