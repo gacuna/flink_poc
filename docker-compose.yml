@@ -17,24 +17,48 @@ services:
     volumes:
       - ./ext/jars/flink-sql-connector-mysql-cdc-2.4.1.jar:/opt/flink/lib/flink-sql-connector-mysql-cdc-2.4.1.jar
       - ./ext/jars/flink-connector-jdbc-3.1.0-1.17.jar:/opt/flink/lib/flink-connector-jdbc-3.1.0-1.17.jar
+      - ./ext/jars/mysql-connector-j-8.2.0.jar:/opt/flink/lib/mysql-connector-j-8.2.0.jar
       - ./ext/jobs/job.sql:/opt/flink/job.sql
     networks:
       - flink-net
 
+  taskmanager:
+    image: flink:1.19.1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: jobmanager
+        metrics.reporters: prom
+        metrics.reporter.prom.factory.class: org.apache.flink.metrics.prometheus.PrometheusReporterFactory
+        metrics.reporter.prom.port: 9091
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    volumes:
+      - ./ext/jars/flink-sql-connector-mysql-cdc-2.4.1.jar:/opt/flink/lib/flink-sql-connector-mysql-cdc-2.4.1.jar
+      - ./ext/jars/flink-connector-jdbc-3.1.0-1.17.jar:/opt/flink/lib/flink-connector-jdbc-3.1.0-1.17.jar
+      - ./ext/jars/mysql-connector-j-8.2.0.jar:/opt/flink/lib/mysql-connector-j-8.2.0.jar
+    networks:
+      - flink-net
+
   mysql-push:
-    image: mysql:latest
+    image: mysql:8.0.23
+    platform: linux/x86_64
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./ext/sql/mysql.cnf:/etc/mysql/mysql.conf.d/mysql.cnf
+      - mysql_data_ebdb:/var/lib/mysql
+      - mysql_data_ebdb:/var/log/mysql
+      - ./ext/sql/mysql.cnf:/etc/mysql/conf.d/my.cnf
       - ./ext/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"
     networks:
       - flink-net
 
-  mysql-user:
-    image: mysql:latest
+  mysql-users:
+    image: mysql:8.0.23
+    platform: linux/x86_64
     environment:
       MYSQL_ROOT_PASSWORD: root
     ports:
@@ -42,5 +66,8 @@ services:
     networks:
       - flink-net
 
+volumes:
+  mysql_data_ebdb:
+    driver: local
 networks:
   flink-net:
