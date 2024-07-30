@@ -64,3 +64,9 @@ CREATE TABLE shop_shop_users (
       'table-name' = 'shop_users',
       'server-time-zone' = 'UTC'
       );
+
+CREATE VIEW users_raw AS
+SELECT *
+FROM ebdb_users u
+         LEFT JOIN ebdb_user_woo_users uwu ON u.id = uwu.user_id
+         LEFT JOIN shop_shop_users su ON su.ID = uwu.woo_user_id;
